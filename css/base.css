@@ -1,0 +1,51 @@
+body {position:relative; }
+
+.navbar {height:70px; border-color:#00AEEF; color:#FFF; border-bottom: 1px solid #00AEEF;}
+.navbar img {padding-top:10px;}
+.navbar .search-bar {padding-top: 20px;}
+.navbar .search-bar label {font-size:1.6em; left: 40px; padding-top: 5px;}
+.navbar .search-bar div {padding-left: 0px;}
+
+.navbar .settings {float: right; padding-top: 15px;}
+.navbar .settings a {text-decoration: none;}
+.navbar .settings a p {color:#FFF; font-size: 1.6em; padding-top: 5px;}
+
+.navbar .popover {color: #000; font-size: 1.2em; line-height: 200%;}
+.navbar .popover a:hover {color: #000;}
+.navbar .popover .popover-title {font-size: 1em; text-align: center;}
+
+.sidebar {position:fixed; padding-top:90px; width:20%; height:100%; float:left; border-right: solid 1px #00AEEF; }
+.sidebar-ul {list-style-type:none; font-size:1.7em; padding-left: 5%; line-height: 33px;}
+.sidebar-ul li a[href="#"]:nth-of-type(2) {letter-spacing: -1.5px;}
+.sidebar-ul span:not(.glyphicon-home) {font-size: 0.7em; padding-right: 5px; color:#000;}
+.sidebar-ul .glyphicon-home {padding-right: 5px; font-size: 1.1em;}
+.sidebar-ul ul {list-style-type:none;}
+.sidebar-ul ul li {font-size:0.75em;}
+.sidebar-ul ul li a {color: #000;}
+.sidebar .sidebar-img {position: relative; margin-top: 65%; margin-left: 10%;}
+.sidebar .sidebar-img img {height: 150px;}
+
+.content {width:80%; float:right; padding-top:50px; padding-left: 30px; padding-right: 30px; background:#FFF; color:#00AEEF;}
+.content .page-header {padding-bottom: 0px; margin-bottom: 15px;}
+.content .page-header h1 { margin-bottom: 5px; }
+
+.action-menu {display: table; margin: 0 auto;}
+.action-menu span { padding: 10px 10px; padding-bottom: 15px;font-size:1.5em; color:#000;}
+.action-menu span p {display: inline; padding-left: 5px;}
+.action-menu .glyphicon {border-radius: 5px;}
+
+.table-div {color: #000; padding-top: 15px;}
+.table-div table {margin-bottom: 0px;}
+.table-div table th {color: #00AEEF;}
+
+.overlay {display:none; position: fixed; top:0px; left:0px; width: 100%; height: 100%; z-index: 999; background: rgba(0,0,0,0.6); }
+
+.table-top {  position: fixed; z-index: 9999; background-color: #FFF; width: 77%}
+.table-top td:hover {background: rgba(0,174,239,0.5); color: #FFF;}
+
+/*****FOR THE PRINT VERSION*****/
+@media print{   
+    .sidebar,.navbar, .action-menu{ display:none; }
+    .container{ margin-right:10%; margin-top: -5%; }
+    .page-header h1{ font-size: 20px; margin-left:5%; }
+}

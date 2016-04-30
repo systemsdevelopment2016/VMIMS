@@ -1,0 +1,30 @@
+.content .page-header h1 { text-align: center; font-size: 3em; margin-bottom: 5px;}
+
+.page-menu {margin-top: 30px;}
+.page-menu .page-menu-section {height: 500px;}
+
+.page-menu .panel .panel-heading {height: 200px; text-align: center;}
+.page-menu .panel .panel-heading img { width: 80%; display: inline-block; position: relative; top: 50%; transform: translateY(-50%); }
+.page-menu .panel .panel-heading #list-img { height: 100%; width: 50%;}
+
+.page-menu .panel .panel-body {padding: 0px; font-size: 1.3em; text-align: center; height: 139px;}
+.page-menu .panel .four-list-group-items { height: 185px; }
+.page-menu .panel .panel-body .list-group-item {padding: 10px 15px;}
+
+.page-menu .panel .panel-body a {text-decoration: none; color: #00AEEF;}
+.page-menu .panel .panel-body li:hover {background:rgba(0,174,239,0.5); color:#FFF; text-decoration: none;}
+
+.page-menu .panel .panel-footer p { font-size: 1.5em; margin-bottom: 0px; text-align: center; text-transform: lowercase; font-variant:small-caps; font-weight: lighter; letter-spacing: 0.1em;}
+
+/*
+.page-menu h2 {text-align: center; }
+.page-menu .page-menu-section {padding-left:25px;}
+.page-menu .page-menu-section .panel {width: 80%; }
+.page-menu .page-menu-section .panel .panel-body {padding:15px 30px; }
+.page-menu .page-menu-section .panel .panel-footer {font-size: 1.5em; text-align: center;}
+.page-menu .page-menu-section .panel .panel-footer p {margin-bottom: 0px;}*/
+
+/* legacy code for glyphicons
+.page-menu .page-menu-section span {font-size: 1.5em; padding: 5px; margin-bottom: 5px; border-radius: 5px; color:#000; }
+.page-menu .page-menu-section span:last-child {padding-bottom: 5px; }
+.page-menu .page-menu-section span:hover {color:#00AEEF;} */
