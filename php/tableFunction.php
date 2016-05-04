@@ -1,7 +1,7 @@
 <?php
 
 /**STILL MISSING PROCEDURES FOR THE TABLE THIS IS JUST A SIMPLE DEMO**/
-$database = new SQLiteDatabase('amicaleStinson.db');
+$database = new SQLiteDatabase('amicale.sqlite');
 
 function addRow($rowArrayData,$tableName){
 
@@ -85,5 +85,30 @@ $sql = '';
 	$database->queryExec($sql);
 
 }
+
+function populateInventoryTables()
+{
+
+}
+
+
+function populateShoppingTable()
+{
+
+}
+
+function populateWastageTable()
+{
+
+}
+
+function populateSalesTable()
+{
+
+}
+
+
+
+
 
 ?>
