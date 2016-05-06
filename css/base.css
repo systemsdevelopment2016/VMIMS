@@ -43,6 +43,14 @@ body {position:relative; }
 .table-top {  position: fixed; z-index: 9999; background-color: #FFF; width: 77%}
 .table-top td:hover {background: rgba(0,174,239,0.5); color: #FFF;}
 
+#ReportSales, #ReportWastage{
+	margin-top: 30px;
+}
+
+#ReportSales{
+	margin-bottom: 50px;
+}
+
 /*****FOR THE PRINT VERSION*****/
 @media print{   
     .sidebar,.navbar, .action-menu{ display:none; }
