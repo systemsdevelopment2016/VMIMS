@@ -68,6 +68,7 @@ create_tables();
               <li><a href="html/sales.html">Liste de Ventes</a></li>
             </ul>
           </li>
+          <li><a href="html/report.php"><span class="glyphicon"></span>Rapport</a>
         </ul>
         
         <div class="sidebar-img"><img src="img/amicale-stinson-logo.png" height="100"></div>
