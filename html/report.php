@@ -104,16 +104,21 @@
 
            <tbody>
            <?php
-              foreach($result as $row){
-                echo "<tr>";
-                echo "<td>".$row[one.L_Name]."</td>";
-                echo "<td>".$row[sec.P_Name]."</td>";
-                echo "<td>".$row[sec.P_Category]."</td>";
-                echo "<td>".$row[th.PRL_Quantity]."</td>";
-                echo "<td>".$row[th.PRL_ExpiryDate]."</td>";
-                echo "<td>".$row[fo.PR_BuyPrice]."</td>";
-                echo "</tr>";
-              }
+
+           if(is_array($result) || is_object($result))
+           {
+                  foreach($result as $row)
+                  {
+                    echo "<tr>";
+                    echo "<td>".$row[one.L_Name]."</td>";
+                    echo "<td>".$row[sec.P_Name]."</td>";
+                    echo "<td>".$row[sec.P_Category]."</td>";
+                    echo "<td>".$row[th.PRL_Quantity]."</td>";
+                    echo "<td>".$row[th.PRL_ExpiryDate]."</td>";
+                    echo "<td>".$row[fo.PR_BuyPrice]."</td>";
+                    echo "</tr>";
+                  }
+           }
 
            ?>
            </tbody>
@@ -141,16 +146,20 @@
                     where th.P_ID = one.P_ID and sec.PRL_ID = (select PRL_ID from ProductRetailerLocations where P_ID = one.P_ID)';
              $result = $db->query($sql);
 
-             foreach ($result as $newRow){
-                echo "<tr>";
-                echo "<td>".$newRow[one.P_Name]."</td>";
-                echo "<td>".$newRow[sec.W_Date]."</td>";
-                echo "<td>".$newRow[one.P_Category]."</td>";
-                echo "<td>".$newRow[sec.W_Quantity]."</td>";
-                echo "<td>".$newRow[sec.W_Reason]."</td>";
-                echo "<td>".$newRow[th.PR_BuyPrice* sec.W_Quantity]."</td>";
-                echo "<td>".$newRow[sec.W_Supervisor]."</td>";
-                echo "</tr>";
+             if(is_array($result) || is_object($result))
+             {
+               foreach ($result as $newRow)
+               {
+                  echo "<tr>";
+                  echo "<td>".$newRow[one.P_Name]."</td>";
+                  echo "<td>".$newRow[sec.W_Date]."</td>";
+                  echo "<td>".$newRow[one.P_Category]."</td>";
+                  echo "<td>".$newRow[sec.W_Quantity]."</td>";
+                  echo "<td>".$newRow[sec.W_Reason]."</td>";
+                  echo "<td>".$newRow[th.PR_BuyPrice* sec.W_Quantity]."</td>";
+                  echo "<td>".$newRow[sec.W_Supervisor]."</td>";
+                  echo "</tr>";
+                }
               }
               
              ?>
