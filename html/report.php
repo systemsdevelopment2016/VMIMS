@@ -1,3 +1,7 @@
+<?php
+      $db = new PDO("sqlite:/db/amicale.sqlite");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,7 +83,10 @@
         <div class="table-div">
 
             <?php
-                $database = sqlite_open('/db/amicale.sqlite') or die('Connection problem');
+                  $sql = "select one.L_Name, sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
+                          from Locations one, Products sec, ProductRetailerLocations th, ProductRetailers fo
+                          where one.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID";
+                  $result = $db->query($sql);
             ?>
 
           <table class="table table-responsive table-bordered table-hover" id="ReportProducts">
@@ -95,7 +102,20 @@
             </thead>
 
            <tbody>
-            <tr>
+           <?php
+              while($row = sqlite_fetch_array($result)){
+                echo "<tr>";
+                echo "<td>".$row[L_Name]."</td>";
+                echo "<td>".$row[P_Name]."</td>";
+                echo "<td>".$row[P_Category]."</td>";
+                echo "<td>".$row[PRL_Quantity]."</td>";
+                echo "<td>".$row[PRL_ExpiryDate]."</td>";
+                echo "<td>".$row[PR_BuyPrice]."</td>";
+                echo "</tr>";
+              }
+
+           ?>
+            <!--tr>
             <td>Fridge 1</td>
               <td>Oreo Cookies</td>
               <td>Cookies/Pastry</td>
@@ -147,7 +167,7 @@
               <td>5</td>
               <td>15.09.17</td>
               <td>$2.99</td>
-            </tr>
+            </tr-->
            </tbody>
           </table>
 
@@ -166,7 +186,29 @@
               </thead>
 
              <tbody>
-              <tr>
+
+             <?php
+
+             $sql = 'select one.P_Name, sec.W_Date, one.P_Category, sec.W_Quantity, sec.W_Reason, th.PR_BuyPrice * sec.W_Quantity, sec.W_Supervisor
+                    from Products one, Wastes sec, ProductRetailers th
+                    where th.P_ID = one.P_ID and sec.PRL_ID = (select PRL_ID from ProductRetailerLocations where P_ID = one.P_ID)';
+             $result = $db->query($sql);
+
+
+
+             while($row = sqlite_fetch_array($result)){
+                echo "<tr>";
+                echo "<td>".$row[P_Name]."</td>";
+                echo "<td>".$row[W_Date]."</td>";
+                echo "<td>".$row[P_Category]."</td>";
+                echo "<td>".$row[W_Quantity]."</td>";
+                echo "<td>".$row[PR_BuyPrice* sec.W_Quantity]."</td>";
+                echo "<td>".$row[W_Supervisor]."</td>";
+                echo "</tr>";
+              }
+              
+             ?>
+              <!--tr>
                 <td>Lays Chips</td>
                 <td>14/04</td>
                 <td>Snacks</td>
@@ -195,7 +237,7 @@
                 <td>Tout est fondu</td>
                 <td>$13</td>
                 <td>Georgia</td>
-              </tr>
+              </tr-->
 
              </tbody>
             </table>

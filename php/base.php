@@ -43,7 +43,7 @@ function connect()
 {
 	try
 	{
-		$db = new PDO("sqlite:/db/amicale.sqlite");
+		return $db = new PDO("sqlite:/db/amicale.sqlite");
 	}
 	catch(PDOException $e)
 	{
