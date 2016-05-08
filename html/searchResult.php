@@ -1,3 +1,8 @@
+<?php
+      $dsn = 'sqlite:/xampp/htdocs/db/amicale.sqlite';
+      $db = new PDO($dsn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +30,7 @@
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
             <div class="col-xs-10">
-              <input class="form-control" id="jetsSearch" type="search" placeholder="Rechercher...">
+              <input class="form-control" id="search" type="search" placeholder="Rechercher...">
             </div>
           </div>
           
@@ -72,10 +77,11 @@
           <h1>Recherche</h1>
         </div>
 
-        <!--div class="table-div">
-          <table class="table table-responsive table-bordered table-hover" id="jetsContent">
+        <div class="table-div">
+          <table class="table table-responsive table-bordered table-hover">
             <thead>
              <tr>
+               <th>Endroit</th>
                <th>Produit</th>
                <th>Catégorie</th>
                <th>Quantité</th>
@@ -85,53 +91,31 @@
             </thead>
 
            <tbody>
-            <tr>
-              <td>Oreo Cookies</td>
-              <td>Cookies/Pastry</td>
-              <td>15</td>
-              <td>15.09.17</td>
-              <td>$4.99</td>
-            </tr>
 
-            <tr>
-              <td>Smarties</td>
-              <td>Sweets</td>
-              <td>10</td>
-              <td>15.09.17</td>
-              <td>$3.99</td>
-            </tr>
+           <?php
+                  $retrieveValue = $_POST['variable'];
 
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
+                  $sql = "select one.L_Name, sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
+                          from Locations one, Products sec, ProductRetailerLocations th, ProductRetailers fo
+                          where one.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID and sec.P_Name LIKE %$retrieveValue%";
+                  $queryResult = $db->query($sql);
 
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
 
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
+                  if(is_array($queryResult) || is_object($queryResult))
+                  {
+                      foreach($queryResult as $row)
+                      {
+                        echo "<tr>";
+                        echo "<td>".$row[L_Name]."</td>";
+                        echo "<td>".$row[P_Name]."</td>";
+                        echo "<td>".$row[P_Category]."</td>";
+                        echo "<td>".$row[PRL_Quantity]."</td>";
+                        echo "<td>".$row[PRL_ExpiryDate]."</td>";
+                        echo "<td>".$row[PR_BuyPrice]."</td>";
+                        echo "</tr>";
+                    }
+                 }
+            ?>
            </tbody>
           </table>
 
@@ -145,6 +129,5 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/table.js"></script>
-    <script type="text/javascript" src="./js/jets.min.js"></script>
   </body>
 </html>

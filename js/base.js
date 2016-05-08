@@ -25,7 +25,19 @@ $(document).ready(function(e) {
 
 	$('.form-control').keypress(function(e){
         if(e.keyCode == 13 && $(this).val().length > 0){
-          window.location.href = "searchResult.html";
+          if(location.href === "http://localhost/index.php")
+          {
+          	window.location.href = "html/searchResult.php";
+          }
+          else{
+          	window.location.href = "searchResult.php";
+          }
+          var value = $(this).val();
+          $.ajax({
+          	type: 'POST',
+          	url: 'searchResult.php',
+          	data: {'variable':value}
+          });
         }
     });		
 

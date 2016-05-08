@@ -32,7 +32,7 @@ create_tables();
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
             <div class="col-xs-10">
-              <input class="form-control" id="jetsSearch" type="search" placeholder="Rechercher...">
+              <input class="form-control" id="search" type="search" placeholder="Rechercher...">
             </div>
           </div>
           
@@ -153,6 +153,5 @@ create_tables();
     <script src="./js/jquery-1.12.3.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/base.js"></script>
-    <script type="text/javascript" src="./js/jets.min.js"></script>
   </body>
 </html>

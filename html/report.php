@@ -1,5 +1,6 @@
 <?php
-      $db = new PDO("sqlite:/db/amicale.sqlite");
+      $dsn = 'sqlite:/xampp/htdocs/db/amicale.sqlite';
+      $db = new PDO($dsn);
 ?>
 
 <!DOCTYPE html>
@@ -103,71 +104,18 @@
 
            <tbody>
            <?php
-              while($row = sqlite_fetch_array($result)){
+              foreach($result as $row){
                 echo "<tr>";
-                echo "<td>".$row[L_Name]."</td>";
-                echo "<td>".$row[P_Name]."</td>";
-                echo "<td>".$row[P_Category]."</td>";
-                echo "<td>".$row[PRL_Quantity]."</td>";
-                echo "<td>".$row[PRL_ExpiryDate]."</td>";
-                echo "<td>".$row[PR_BuyPrice]."</td>";
+                echo "<td>".$row[one.L_Name]."</td>";
+                echo "<td>".$row[sec.P_Name]."</td>";
+                echo "<td>".$row[sec.P_Category]."</td>";
+                echo "<td>".$row[th.PRL_Quantity]."</td>";
+                echo "<td>".$row[th.PRL_ExpiryDate]."</td>";
+                echo "<td>".$row[fo.PR_BuyPrice]."</td>";
                 echo "</tr>";
               }
 
            ?>
-            <!--tr>
-            <td>Fridge 1</td>
-              <td>Oreo Cookies</td>
-              <td>Cookies/Pastry</td>
-              <td>15</td>
-              <td>15.09.17</td>
-              <td>$4.99</td>
-            </tr>
-
-            <tr>
-            <td>Fridge 2</td>
-              <td>Smarties</td>
-              <td>Sweets</td>
-              <td>10</td>
-              <td>15.09.17</td>
-              <td>$3.99</td>
-            </tr>
-
-            <tr>
-            <td>Collations</td>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-            <td>Breuvages 1</td>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-            <td>Breuvages 2</td>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-            <td>Réserve</td>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr-->
            </tbody>
           </table>
 
@@ -180,8 +128,7 @@
                  <th>Quantité</th>
                  <th>Raison</th>
                  <th>Perte $</th>
-                 <th>Enregistré par</th>
-                 
+                 <th>Enregistré par</th>               
                </tr>
               </thead>
 
@@ -194,51 +141,19 @@
                     where th.P_ID = one.P_ID and sec.PRL_ID = (select PRL_ID from ProductRetailerLocations where P_ID = one.P_ID)';
              $result = $db->query($sql);
 
-
-
-             while($row = sqlite_fetch_array($result)){
+             foreach ($result as $newRow){
                 echo "<tr>";
-                echo "<td>".$row[P_Name]."</td>";
-                echo "<td>".$row[W_Date]."</td>";
-                echo "<td>".$row[P_Category]."</td>";
-                echo "<td>".$row[W_Quantity]."</td>";
-                echo "<td>".$row[PR_BuyPrice* sec.W_Quantity]."</td>";
-                echo "<td>".$row[W_Supervisor]."</td>";
+                echo "<td>".$newRow[one.P_Name]."</td>";
+                echo "<td>".$newRow[sec.W_Date]."</td>";
+                echo "<td>".$newRow[one.P_Category]."</td>";
+                echo "<td>".$newRow[sec.W_Quantity]."</td>";
+                echo "<td>".$newRow[sec.W_Reason]."</td>";
+                echo "<td>".$newRow[th.PR_BuyPrice* sec.W_Quantity]."</td>";
+                echo "<td>".$newRow[sec.W_Supervisor]."</td>";
                 echo "</tr>";
               }
               
              ?>
-              <!--tr>
-                <td>Lays Chips</td>
-                <td>14/04</td>
-                <td>Snacks</td>
-                <td>13</td>
-                <td>Passé date</td>
-                <td>$13</td>
-                <td>Georgia</td>
-              </tr>
-
-              <tr>
-                <td>Nutella</td>
-                <td>14/04</td>
-                <td>Snacks</td>
-                <td>13</td>
-                <td>Passé date</td>
-                <td>$13</td>
-                <td>Georgia</td>
-              </tr>
-
-
-              <tr>
-                <td>Crème glacée</td>
-                <td>14/04</td>
-                <td>Snacks</td>
-                <td>13</td>
-                <td>Tout est fondu</td>
-                <td>$13</td>
-                <td>Georgia</td>
-              </tr-->
-
              </tbody>
             </table>
 
