@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
-	$(".action-menu .glyphicon-plus-sign").on('click', add);
-	$(".action-menu .glyphicon-pencil").on('click', modify);
-	$(".action-menu .glyphicon-print").on('click', printTable);
+    $(".action-menu .glyphicon-plus-sign").on('click', add);
+    $(".action-menu .glyphicon-pencil").on('click', modify);
+    $(".action-menu .glyphicon-print").on('click', printTable);
     $(".action-menu .glyphicon-trash").on('click',deleteRow);
     /*$(".action-menu .glyphicon-pushpin").on('click',addNote);
 
@@ -21,119 +21,176 @@ $(document).ready(function() {
 
 /* ADD */
 function add() {
+    if ( $(".form-container").is(':visible') ) {
+        $(".form-container").hide(150, function(){ $(".form-container").remove(); });
+        return;
+    }
+
+    $(".action-menu").after(`
+        <div class="form-container" style="display:none;">
+          <form class="form-inline" role="form">
+            <div class="form-group col-md-3">
+              <label for="pname">Product Name:</label>
+              <input type="text" class="form-control" id="pname" placeholder="Enter product">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="category">Product Category:</label>
+              <input type="text" class="form-control" id="category" placeholder="Enter category">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="quantity">Product Quantity:</label>
+              <input type="text" class="form-control" id="quantity" placeholder="Enter quantity">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="exp">Expiry Date:</label>
+              <input type="text" class="form-control" id="exp" placeholder="Enter date">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="rname">Retailer Name:</label>
+              <input type="text" class="form-control" id="rname" placeholder="Enter retailer">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="raddress">Retailer Address:</label>
+              <input type="text" class="form-control" id="raddress" placeholder="Enter address">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="bprice">Buying Price:</label>
+              <input type="text" class="form-control" id="bprice" placeholder="Enter buy price">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="sprice">Selling Price:</label>
+              <input type="text" class="form-control" id="sprice" placeholder="Enter sell price">
+            </div>
+            <div class="form-group">
+              <label for="comment">Comment:</label>
+              <textarea class="form-control" rows="1" id="comment" placeholder="Enter comments or notes"></textarea>
+            </div>
+
+            <br/>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div>
+    `);
+
+    $(".form-container").show(150);
+
+}
+
+/* ADD legacy code */
+function add_old() {
 
     var generatedID = Math.floor(1000 + Math.random() * 9000);
     console.log(generatedID);
 
-	$(".action-menu .glyphicon-trash").on('click',deleteRow);
+    $(".action-menu .glyphicon-trash").on('click',deleteRow);
     
         if(document.getElementById("deleteFeatures")){
             var div = document.getElementById("deleteFeatures");
             $(div).remove();
         }
         
-	if ( $(".table tr:last td input").length && $(".table tr:last td input").attr("class").indexOf("empty") >= 0 ) {
-		$(".table .empty").focus();
-		return;
-	}
+    if ( $(".table tr:last td input").length && $(".table tr:last td input").attr("class").indexOf("empty") >= 0 ) {
+        $(".table .empty").focus();
+        return;
+    }
 
-	var noOfFields = $(".table > thead").find("> tr:first > th").length;
+    var noOfFields = $(".table > thead").find("> tr:first > th").length;
 
-	var fieldWidth = $(".table > thead").find("> tr:first > th:first").css("width"); // includes padding and border; expressed in px
-	var fieldPadding = $(".table > thead").find("> tr:first > th:first").css("padding");
+    var fieldWidth = $(".table > thead").find("> tr:first > th:first").css("width"); // includes padding and border; expressed in px
+    var fieldPadding = $(".table > thead").find("> tr:first > th:first").css("padding");
 
-	if($(".table tbody tr").length == 0){
-		$(".table tbody").append('<tr class="input-row" id='+ generatedID+'></tr>');
-	}
-	else{
-		$(".table tr:last").after('<tr class="input-row" id='+ generatedID+'></tr>');
-	}
-	
+    if($(".table tbody tr").length == 0){
+        $(".table tbody").append('<tr class="input-row" id='+ generatedID+'></tr>');
+    }
+    else{
+        $(".table tr:last").after('<tr class="input-row" id='+ generatedID+'></tr>');
+    }
+    
 
-	for (var i = 1; i <= noOfFields; i++)
-		$(".input-row:last").append("<td><input class='form-control empty' type='text'></td>");
+    for (var i = 1; i <= noOfFields; i++)
+        $(".input-row:last").append("<td><input class='form-control empty' type='text'></td>");
 
-	$(".input-row td").css({"width" : fieldWidth});
-	$(".input-row td").css({"padding" : parseInt(fieldPadding)/2+"px"});
-	$(".input-row td:first input").focus();
-	$(".table .empty:first").focus();
+    $(".input-row td").css({"width" : fieldWidth});
+    $(".input-row td").css({"padding" : parseInt(fieldPadding)/2+"px"});
+    $(".input-row td:first input").focus();
+    $(".table .empty:first").focus();
 
-	$(".input-row td input").blur(function() {
-		var parent = $(this).parent();
-		var input = $(this).val();
+    $(".input-row td input").blur(function() {
+        var parent = $(this).parent();
+        var input = $(this).val();
 
-		if (input == "") {
-			$(this).css("border", "solid 1px red");
-			$(this).focus();
-			return;
-		}
-		
-		$(this).remove();
-		parent.text(input);
-		parent.css({"padding" : fieldPadding});
+        if (input == "") {
+            $(this).css("border", "solid 1px red");
+            $(this).focus();
+            return;
+        }
+        
+        $(this).remove();
+        parent.text(input);
+        parent.css({"padding" : fieldPadding});
 
-		parent.next().children(0).focus();
-	});
+        parent.next().children(0).focus();
+    });
 
-	$(".table tr:last").removeClass("empty");
+    $(".table tr:last").removeClass("empty");
 }
 
 /* MODIFY */
 function modify() {
-	$("body").append('<div class="overlay"></div>');
-	$(".overlay").css("display", "block");
+    $("body").append('<div class="overlay"></div>');
+    $(".overlay").css("display", "block");
 
-	$("table").addClass("table-top");
+    $("table").addClass("table-top");
 
-	$(document).mouseup(function (e)
-	{
-	    var container = $(".table-top");
+    $(document).mouseup(function (e)
+    {
+        var container = $(".table-top");
 
-	    if (!container.is(e.target) // if the target of the click isn't the container...
-	        && container.has(e.target).length === 0) // ... nor a descendant of the container
-	    {
-	        $(".overlay").remove();
-			$(".table-top td").off("click");
-			$(".table").removeClass("table-top");
-			$(document).off("mouseup");
-	    }
-	});
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            $(".overlay").remove();
+            $(".table-top td").off("click");
+            $(".table").removeClass("table-top");
+            $(document).off("mouseup");
+        }
+    });
 
-	$(".table-top td").click(function() {
+    $(".table-top td").click(function() {
 
-		var oldContent = $(this).text();
+        var oldContent = $(this).text();
 
-		var fieldWidth = $(this).width();
-		var fieldPadding = $(".table > thead").find("> tr:first > th:first").css("padding");
+        var fieldWidth = $(this).width();
+        var fieldPadding = $(".table > thead").find("> tr:first > th:first").css("padding");
 
-		$(this).text("");
-		$(this).append("<input class='form-control empty' type='text'></td>");
+        $(this).text("");
+        $(this).append("<input class='form-control empty' type='text'></td>");
 
-		$(this).css({"width" : fieldWidth+"px"});
-		$(this).css({"padding" : parseInt(fieldPadding)/4+"px"});
-		$(this).children(0).focus();
+        $(this).css({"width" : fieldWidth+"px"});
+        $(this).css({"padding" : parseInt(fieldPadding)/4+"px"});
+        $(this).children(0).focus();
 
-		$(this).children(0).blur(function() {
-			var parent = $(this).parent();
-			var input = $(this).val();
+        $(this).children(0).blur(function() {
+            var parent = $(this).parent();
+            var input = $(this).val();
 
-			$(this).remove();
-			if ( input == "") {
-				parent.text(oldContent);
-				parent.css({"padding" : fieldPadding});
-			}
-			else {
-				parent.text(input);
-				parent.css({"padding" : fieldPadding});
-				$(".overlay").remove();
-				$(".table-top td").off("click");
-				$(".table").removeClass("table-top");
-				$(document).off("mouseup");
-			}
-		});
+            $(this).remove();
+            if ( input == "") {
+                parent.text(oldContent);
+                parent.css({"padding" : fieldPadding});
+            }
+            else {
+                parent.text(input);
+                parent.css({"padding" : fieldPadding});
+                $(".overlay").remove();
+                $(".table-top td").off("click");
+                $(".table").removeClass("table-top");
+                $(document).off("mouseup");
+            }
+        });
 
-		
-	});
+        
+    });
 }
 
 /* PRINT */
@@ -196,7 +253,7 @@ function deleteRow(event){
         
     //add a transparent black overlay
     $("body").append('<div class="overlay"></div>');
-	   $(".overlay").css("display", "block");
+       $(".overlay").css("display", "block");
         
 
         var decision  = window.confirm("La suppresion de cette rangée de donnée sera irréversible! \nÊtes-vous sûr de vouloir supprimer cette rangée?");
@@ -214,7 +271,7 @@ function deleteRow(event){
         // if there is no more data, then it displays a message
         //by displaying a new paragraph
         if(rowCount === 1){
-			     para.innerHTML = "Aucune donnée à montrer";
+                 para.innerHTML = "Aucune donnée à montrer";
             para.style.fontSize = "20px";
             var tableWidth = $(".table").width() / $(".table").parent().width()*100;
             console.log(tableWidth);
@@ -229,13 +286,13 @@ function deleteRow(event){
 
 /*function addNote(event){
 
-	$(this).off(event);
+    $(this).off(event);
 
-	var divTag =  document.createElement("div");
+    var divTag =  document.createElement("div");
     divTag.id = "deleteFeatures";
     divTag.style.marginTop = "50px";
     
-	var para = document.createElement("p");
+    var para = document.createElement("p");
     para.innerHTML = "Selectionnez une rangée et écrivez vos notes dans la boite ci-dessous";
     para.style.color = "black";
     para.id="info";
@@ -274,33 +331,33 @@ function deleteRow(event){
 
     $("#b_addNote").click(function(){
 
-    	if(document.getElementsByClassName("addNote").length != 0){
+        if(document.getElementsByClassName("addNote").length != 0){
 
        $(".table tbody").off('click','tr', anon);  
        $(".action-menu .glyphicon-pushpin").on('click',addNote);      
 
-    		$("tr.addNote").addClass("hasNote");
-    		$("tr.addNote").removeClass("addNote");		
-    		var text = document.getElementById("textarea").value;
-    		$("#deleteFeatures").remove();
-    		var notes = document.createElement("p");
-    		notes.innerHTML = "Note: " + text;
-    		notes.style.color = "black"
-    		notes.style.fontSize = "16px";
-    		notes.id = "notesCurrentRow";
-    		notes.style.marginLeft = "5%";
-    		$(".hasNote").css("background","rgba(172,186,213,0)");
-    		$(notes).insertAfter($(".table-div"));
-    		notes.style.display = "none";
+            $("tr.addNote").addClass("hasNote");
+            $("tr.addNote").removeClass("addNote");     
+            var text = document.getElementById("textarea").value;
+            $("#deleteFeatures").remove();
+            var notes = document.createElement("p");
+            notes.innerHTML = "Note: " + text;
+            notes.style.color = "black"
+            notes.style.fontSize = "16px";
+            notes.id = "notesCurrentRow";
+            notes.style.marginLeft = "5%";
+            $(".hasNote").css("background","rgba(172,186,213,0)");
+            $(notes).insertAfter($(".table-div"));
+            notes.style.display = "none";
 
-    		var countColumns = $(".table").find('tr')[0].cells.length;
+            var countColumns = $(".table").find('tr')[0].cells.length;
         var span = document.createElement("span");
         span.class = "glyphicon glyphicon-pushpin";
         $(".hasNote td:last-child").append(span);
         
 
 
-    	}
+        }
     });
 */
 

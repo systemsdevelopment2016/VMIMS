@@ -77,6 +77,11 @@
         </div>
 
         <div class="table-div">
+
+            <?php
+                $database = sqlite_open('/db/amicale.sqlite') or die('Connection problem');
+            ?>
+
           <table class="table table-responsive table-bordered table-hover" id="ReportProducts">
             <thead>
              <tr>
