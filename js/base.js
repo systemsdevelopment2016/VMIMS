@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function(e) {
 
 	$('[data-toggle="popover"]').popover();
 	
@@ -21,7 +21,13 @@ $(document).ready(function() {
 			$(this).css("background-color","rgba(0,174,239,0)");
 			$(this).css("color", "black");
 		}
-	});			
+	});	
+
+	$('.form-control').keypress(function(e){
+        if(e.keyCode == 13 && $(this).val().length > 0){
+          window.location.href = "searchResult.html";
+        }
+    });		
 
 });
 
@@ -29,3 +35,4 @@ function isChildOfActionmenu(target) {
 	return ( target.hasClass("glyphicon-plus-sign") || target.hasClass("glyphicon-pencil") || target.hasClass("glyphicon-trash") ||
 		 target.hasClass("glyphicon-pushpin") || target.hasClass("glyphicon-floppy-disk") || target.hasClass("glyphicon-print") );
 }
+

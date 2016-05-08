@@ -54,6 +54,6 @@ body {position:relative; }
 /*****FOR THE PRINT VERSION*****/
 @media print{   
     .sidebar,.navbar, .action-menu{ display:none; }
-    .container{ margin-right:10%; margin-top: -5%; }
+    .container{ margin-right:10%; margin-top: -5%; width: 90%}
     .page-header h1{ font-size: 20px; margin-left:5%; }
 }

@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
 
-
   </head>
   <body>
     <div class="">
@@ -27,15 +26,6 @@
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
             <div class="col-xs-10">
               <input class="form-control" id="jetsSearch" type="search" placeholder="Rechercher...">
-              <!--script type="text/javascript">
-                $(document).ready(function (e){
-                    $('.form-control').keypress(function(e){
-                        if(e.keyCode == 13){
-                          window.location.href = "searchResult.html";
-                        }
-                    });
-                });
-              </script-->
             </div>
           </div>
           
@@ -79,19 +69,10 @@
 
       <div class="container content"> 
         <div class="page-header">
-          <h1>Accueil / Inventaire / Réserve</h1>
+          <h1>Recherche</h1>
         </div>
 
-        <div class="action-menu">
-          <span class="glyphicon glyphicon-plus-sign"> Ajouter</span>
-          <span class="glyphicon glyphicon-pencil"> Modifier</span>
-          <span class="glyphicon glyphicon-trash"> Supprimer</span>
-          <span class="glyphicon glyphicon-pushpin"> Note</span>
-          <span class="glyphicon glyphicon-floppy-disk"> Sauvegarder</span>
-          <span class="glyphicon glyphicon-print"> Imprimer</span>
-        </div>
-
-        <div class="table-div">
+        <!--div class="table-div">
           <table class="table table-responsive table-bordered table-hover" id="jetsContent">
             <thead>
              <tr>
@@ -164,6 +145,6 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/table.js"></script>
-    <script src="../js/jets.min.js"></script>
+    <script type="text/javascript" src="./js/jets.min.js"></script>
   </body>
 </html>
