@@ -31,9 +31,9 @@ create_tables();
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <div class="col-xs-10">
-              <input class="form-control" id="search" type="search" placeholder="Rechercher...">
-            </div>
+            <form class="col-xs-10" action="html/searchResult.php" method="post">
+              <input class="form-control" id="search" type="text" name="item" placeholder="Rechercher...">
+            </form>
           </div>
           
           <div class="cols-xs-3 settings">
@@ -45,27 +45,27 @@ create_tables();
       
       <div class="sidebar">
         <ul class="sidebar-ul">
-          <li><a href="index.html"><span class="glyphicon glyphicon-home"></span>Accueil</a></li>
+          <li><a href="index.php"><span class="glyphicon glyphicon-home"></span>Accueil</a></li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Inventaire</a>
             <ul>
-              <li><a href="html/fridge1.html">Réfrigérateur 1</a></li>
-              <li><a href="html/fridge2.html">Réfrigérateur 2</a></li>
-              <li><a href="html/backstock.html">Réserve<a></li>
+              <li><a href="html/fridge1.php">Réfrigérateur 1</a></li>
+              <li><a href="html/fridge2.php">Réfrigérateur 2</a></li>
+              <li><a href="html/backstock.php">Réserve<a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Machines Distributrices</a>
             <ul>
-              <li><a href="html/beverages1.html">Breuvages 1</a></li>
-              <li><a href="html/beverages2.html">Breuvages 2</a></li>
-              <li><a href="html/snacks.html">Collations</a></li>
-              <li><a href="html/meals.html">Repas</a></li>
+              <li><a href="html/beverages1.php">Breuvages 1</a></li>
+              <li><a href="html/beverages2.php">Breuvages 2</a></li>
+              <li><a href="html/snacks.php">Collations</a></li>
+              <li><a href="html/meals.php">Repas</a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Listes</a>
             <ul>
-              <li><a href="html/shopping.html">Liste d'Achats</a></li>
-              <li><a href="html/wastage.html">Liste de Pertes</a></li>
-              <li><a href="html/sales.html">Liste de Ventes</a></li>
+              <li><a href="html/shopping.php">Liste d'Achats</a></li>
+              <li><a href="html/wastage.php">Liste de Pertes</a></li>
+              <li><a href="html/sales.php">Liste de Ventes</a></li>
             </ul>
           </li>
           <li><a href="html/report.php"><span class="glyphicon"></span>Rapport</a>

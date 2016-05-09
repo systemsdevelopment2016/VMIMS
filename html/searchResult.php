@@ -18,6 +18,7 @@
     
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <script src="../js/jquery-1.12.3.min.js"></script>
 
   </head>
   <body>
@@ -29,9 +30,9 @@
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <div class="col-xs-10">
-              <input class="form-control" id="search" type="search" placeholder="Rechercher...">
-            </div>
+            <form class="col-xs-10" action="searchResult.php" method="post">
+              <input class="form-control" id="search" type="text" name="itemphp" placeholder="Rechercher...">
+            </form>
           </div>
           
           <div class="cols-xs-3 settings">
@@ -46,24 +47,24 @@
           <li><a href="../index.php"><span class="glyphicon glyphicon-home"></span>Accueil</a></li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Inventaire</a>
             <ul>
-              <li><a href="fridge1.html">Réfrigérateur 1<a></li>
-              <li><a href="fridge2.html">Réfrigérateur 2<a></li>
-              <li><a href="backstock.html">Réserve<a><a></li>
+              <li><a href="fridge1.php">Réfrigérateur 1<a></li>
+              <li><a href="fridge2.php">Réfrigérateur 2<a></li>
+              <li><a href="backstock.php">Réserve<a><a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Machines Distributrices</a>
             <ul>
-              <li><a href="beverages1.html">Breuvages 1<a></li>
-              <li><a href="beverages2.html">Breuvages 2<a></li>
-              <li><a href="snacks.html">Collations<a></li>
-              <li><a href="meals.html">Repas<a></li>
+              <li><a href="beverages1.php">Breuvages 1<a></li>
+              <li><a href="beverages2.php">Breuvages 2<a></li>
+              <li><a href="snacks.php">Collations<a></li>
+              <li><a href="meals.php">Repas<a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Listes</a>
             <ul>
-              <li><a href="shopping.html">Liste d'Achats<a></li>
-              <li><a href="wastage.html">Liste de Pertes<a></li>
-              <li><a href="sales.html">Liste de Ventes<a></li>
+              <li><a href="shopping.php">Liste d'Achats<a></li>
+              <li><a href="wastage.php">Liste de Pertes<a></li>
+              <li><a href="sales.php">Liste de Ventes<a></li>
             </ul>
           </li>
           <li><a href="report.php"><span class="glyphicon"></span>Rapport</a>
@@ -93,28 +94,35 @@
            <tbody>
 
            <?php
-                  $retrieveValue = $_POST['variable'];
 
-                  $sql = "select one.L_Name, sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
-                          from Locations one, Products sec, ProductRetailerLocations th, ProductRetailers fo
-                          where one.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID and sec.P_Name LIKE %$retrieveValue%";
-                  $queryResult = $db->query($sql);
+                    $retrieveValue = $_POST['item'];
 
+                    $sql = "select one.L_Name, sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
+                            from Locations one, Products sec, ProductRetailerLocations th, ProductRetailers fo
+                            where sec.P_Name LIKE '%{$retrieveValue}%' and one.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID";
+                    $queryResult = $db->query($sql);
 
-                  if(is_array($queryResult) || is_object($queryResult))
-                  {
-                      foreach($queryResult as $row)
-                      {
-                        echo "<tr>";
-                        echo "<td>".$row[L_Name]."</td>";
-                        echo "<td>".$row[P_Name]."</td>";
-                        echo "<td>".$row[P_Category]."</td>";
-                        echo "<td>".$row[PRL_Quantity]."</td>";
-                        echo "<td>".$row[PRL_ExpiryDate]."</td>";
-                        echo "<td>".$row[PR_BuyPrice]."</td>";
-                        echo "</tr>";
-                    }
-                 }
+                    if(is_array($queryResult) || is_object($queryResult))
+                    {
+                      
+                        foreach($queryResult as $row)
+                        {
+                          echo "<tr class = 'toDelete'>";
+                          echo "<td>".$row[L_Name]."</td>";
+                          echo "<td>".$row[P_Name]."</td>";
+                          echo "<td>".$row[P_Category]."</td>";
+                          echo "<td>".$row[PRL_Quantity]."</td>";
+                          echo "<td>".$row[PRL_ExpiryDate]."</td>";
+                          echo "<td>".$row[PR_BuyPrice]."</td>";
+                          echo "</tr>";
+                      }
+
+                      $_POST = array();
+                   }
+                   else{
+                    echo "Aucun résultat pour cette recherche";
+                   }
+               
             ?>
            </tbody>
           </table>
@@ -125,7 +133,13 @@
 
     </div> <!--End of .container-fluid-->     
 
-    <script src="../js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript">
+      window.onbeforeunload = function(){
+          $('.toDelete').remove();
+      }
+    </script>
+
+
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/table.js"></script>

@@ -7,27 +7,27 @@
 
     <meta name="description" content="">
     <meta name="author" content="">
+
     <link rel="icon" href="../img/stm-icon.ico">
 
-    <title>Réserve | Amicale Stinson</title>
-    
+    <title>Réfrigérateur 1 | Amicale Stinson</title>
+
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
-
 
   </head>
   <body>
     <div class="">
-    
+
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <div class="col-xs-2"><a href="../index.html"><img src="../img/stm-logo.png"></a></div>
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <div class="col-xs-10">
-              <input class="form-control" id="search" type="search" placeholder="Rechercher...">
-            </div>
+            <form class="col-xs-10" action="searchResult.php" method="post">
+              <input class="form-control" id="search" type="text" name="itemphp" placeholder="Rechercher...">
+            </form>
           </div>
           
           <div class="cols-xs-3 settings">
@@ -42,24 +42,24 @@
           <li><a href="../index.php"><span class="glyphicon glyphicon-home"></span>Accueil</a></li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Inventaire</a>
             <ul>
-              <li><a href="fridge1.html">Réfrigérateur 1<a></li>
-              <li><a href="fridge2.html">Réfrigérateur 2<a></li>
-              <li><a href="backstock.html">Réserve<a><a></li>
+              <li><a href="fridge1.php">Réfrigérateur 1<a></li>
+              <li><a href="fridge2.php">Réfrigérateur 2<a></li>
+              <li><a href="backstock.php">Réserve<a><a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Machines Distributrices</a>
             <ul>
-              <li><a href="beverages1.html">Breuvages 1<a></li>
-              <li><a href="beverages2.html">Breuvages 2<a></li>
-              <li><a href="snacks.html">Collations<a></li>
-              <li><a href="meals.html">Repas<a></li>
+              <li><a href="beverages1.php">Breuvages 1<a></li>
+              <li><a href="beverages2.php">Breuvages 2<a></li>
+              <li><a href="snacks.php">Collations<a></li>
+              <li><a href="meals.php">Repas<a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Listes</a>
             <ul>
-              <li><a href="shopping.html">Liste d'Achats<a></li>
-              <li><a href="wastage.html">Liste de Pertes<a></li>
-              <li><a href="sales.html">Liste de Ventes<a></li>
+              <li><a href="shopping.php">Liste d'Achats<a></li>
+              <li><a href="wastage.php">Liste de Pertes<a></li>
+              <li><a href="sales.php">Liste de Ventes<a></li>
             </ul>
           </li>
           <li><a href="report.php"><span class="glyphicon"></span>Rapport</a>
@@ -70,7 +70,7 @@
 
       <div class="container content"> 
         <div class="page-header">
-          <h1>Accueil / Inventaire / Réserve</h1>
+          <h1>Accueil / Inventaire / Réfrigérateur 1</h1>
         </div>
 
         <div class="action-menu">
@@ -83,7 +83,7 @@
         </div>
 
         <div class="table-div">
-          <table class="table table-responsive table-bordered table-hover">
+          <table class="table table-responsive table-bordered table-hover" id="fridge1">
             <thead>
              <tr>
                <th>Produit</th>

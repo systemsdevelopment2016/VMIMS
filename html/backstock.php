@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
 
+
   </head>
   <body>
     <div class="">
@@ -24,9 +25,9 @@
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <div class="col-xs-10">
-              <input class="form-control" id="search" type="text" placeholder="Rechercher...">
-            </div>
+            <form class="col-xs-10" action="searchResult.php" method="post">
+              <input class="form-control" id="search" type="text" name="itemphp" placeholder="Rechercher...">
+            </form>
           </div>
           
           <div class="cols-xs-3 settings">
@@ -38,29 +39,30 @@
       
       <div class="sidebar">
         <ul class="sidebar-ul">
-          <li><a href="../index.html"><span class="glyphicon glyphicon-home"></span>Accueil</a></li>
+          <li><a href="../index.php"><span class="glyphicon glyphicon-home"></span>Accueil</a></li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Inventaire</a>
             <ul>
-              <li><a href="fridge1.html">Réfrigérateur 1<a></li>
-              <li><a href="fridge2.html">Réfrigérateur 2<a></li>
-              <li><a href="backstock.html">Réserve<a><a></li>
+              <li><a href="fridge1.php">Réfrigérateur 1<a></li>
+              <li><a href="fridge2.php">Réfrigérateur 2<a></li>
+              <li><a href="backstock.php">Réserve<a><a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Machines Distributrices</a>
             <ul>
-              <li><a href="beverages1.html">Breuvages 1<a></li>
-              <li><a href="beverages2.html">Breuvages 2<a></li>
-              <li><a href="snacks.html">Collations<a></li>
-              <li><a href="meals.html">Repas<a></li>
+              <li><a href="beverages1.php">Breuvages 1<a></li>
+              <li><a href="beverages2.php">Breuvages 2<a></li>
+              <li><a href="snacks.php">Collations<a></li>
+              <li><a href="meals.php">Repas<a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Listes</a>
             <ul>
-              <li><a href="shopping.html">Liste d'Achats<a></li>
-              <li><a href="wastage.html">Liste de Pertes<a></li>
-              <li><a href="sales.html">Liste de Ventes<a></li>
+              <li><a href="shopping.php">Liste d'Achats<a></li>
+              <li><a href="wastage.php">Liste de Pertes<a></li>
+              <li><a href="sales.php">Liste de Ventes<a></li>
             </ul>
           </li>
+          <li><a href="report.php"><span class="glyphicon"></span>Rapport</a>
         </ul>
         
         <div class="sidebar-img"><a href="../index.html"><img src="../img/amicale-stinson-logo.png" height="100"></a></div>

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../img/stm-icon.ico">
 
-    <title>Collations | Amicale Stinson</title>
+    <title>Ventes | Amicale Stinson</title>
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
@@ -24,9 +24,9 @@
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <div class="col-xs-10">
-              <input class="form-control" id="search" type="text" placeholder="Rechercher...">
-            </div>
+            <form class="col-xs-10" action="searchResult.php" method="post">
+              <input class="form-control" id="search" type="text" name="itemphp" placeholder="Rechercher...">
+            </form>
           </div>
           
           <div class="cols-xs-3 settings">
@@ -34,31 +34,31 @@
           </div>
 
         </div>
-      </nav>    
+      </nav>   
       
       <div class="sidebar">
         <ul class="sidebar-ul">
           <li><a href="../index.php"><span class="glyphicon glyphicon-home"></span>Accueil</a></li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Inventaire</a>
             <ul>
-              <li><a href="fridge1.html">Réfrigérateur 1<a></li>
-              <li><a href="fridge2.html">Réfrigérateur 2<a></li>
-              <li><a href="backstock.html">Réserve<a><a></li>
+              <li><a href="fridge1.php">Réfrigérateur 1<a></li>
+              <li><a href="fridge2.php">Réfrigérateur 2<a></li>
+              <li><a href="backstock.php">Réserve<a><a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Machines Distributrices</a>
             <ul>
-              <li><a href="beverages1.html">Breuvages 1<a></li>
-              <li><a href="beverages2.html">Breuvages 2<a></li>
-              <li><a href="snacks.html">Collations<a></li>
-              <li><a href="meals.html">Repas<a></li>
+              <li><a href="beverages1.php">Breuvages 1<a></li>
+              <li><a href="beverages2.php">Breuvages 2<a></li>
+              <li><a href="snacks.php">Collations<a></li>
+              <li><a href="meals.php">Repas<a></li>
             </ul>
           </li>
           <li><a href="#"><span class="glyphicon glyphicon-menu-down"></span>Listes</a>
             <ul>
-              <li><a href="shopping.html">Liste d'Achats<a></li>
-              <li><a href="wastage.html">Liste de Pertes<a></li>
-              <li><a href="sales.html">Liste de Ventes<a></li>
+              <li><a href="shopping.php">Liste d'Achats<a></li>
+              <li><a href="wastage.php">Liste de Pertes<a></li>
+              <li><a href="sales.php">Liste de Ventes<a></li>
             </ul>
           </li>
           <li><a href="report.php"><span class="glyphicon"></span>Rapport</a>
@@ -69,7 +69,7 @@
 
       <div class="container content"> 
         <div class="page-header">
-          <h1>Accueil / Machines Distributrices / Collations</h1>
+          <h1>Accueil / Listes / Liste de Ventes</h1>
         </div>
 
         <div class="action-menu">
@@ -83,66 +83,76 @@
 
         <div class="table-div">
           <table class="table table-responsive table-bordered table-hover">
-            <thead>
-             <tr>
-               <th>Produit</th>
-               <th>Catégorie</th>
-               <th>Quantité</th>
-               <th>Date d'Expiration</th>
-               <th>Prix</th>
-             </tr>
-            </thead>
+              <thead>
+               <tr>
+                 <th>Produit</th>
+                 <th>Catégorie</th>
+                 <th>Quantité</th>
+                 <th>Détaillant</th>
+                 <th>Prix d'achat</th>
+                 <th>Prix d'achat + tx</th>
+                 <th>Profit</th>
+                 <th>Prix Suggeré</th>
+                 <th>Tax</th>
+                 <th>Prix Final</th>
+               </tr>
+              </thead>
 
-           <tbody>
-            <tr>
-              <td>Oreo Cookies</td>
-              <td>Cookies/Pastry</td>
-              <td>15</td>
-              <td>15.09.17</td>
-              <td>$4.99</td>
-            </tr>
+             <tbody>
+              <tr>
+                <td>Lays Chips</td>
+                <td>Snack</td>
+                <td>15</td>
+                <td>Dollarama</td>
+                <td>$0.5</td>
+                <td>$0.57</td>
+                <td>35%</td>
+                <td>$0.92</td>
+                <td>Oui</td>
+                <td>$0.95</td>
+              </tr>
 
-            <tr>
-              <td>Smarties</td>
-              <td>Sweets</td>
-              <td>10</td>
-              <td>15.09.17</td>
-              <td>$3.99</td>
-            </tr>
+              <tr>
+                <td>Nutella</td>
+                <td>Snack</td>
+                <td>3</td>
+                <td>Tigre Géant</td>
+                <td>$0.5</td>
+                <td>$0.57</td>
+                <td>35%</td>
+                <td>$0.92</td>
+                <td>Oui</td>
+                <td>$0.95</td>
+              </tr>
 
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
+              <tr>
+                <td>Crème glacée</td>
+                <td>Snack</td>
+                <td>10</td>
+                <td>Costco</td>
+                <td>$0.5</td>
+                <td>$0.57</td>
+                <td>35%</td>
+                <td>$0.92</td>
+                <td>Oui</td>
+                <td>$0.95</td>
+              </tr>
 
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
+              <tr>
+                <td>Snickers</td>
+                <td>Snack</td>
+                <td>10</td>
+                <td>Costco</td>
+                <td>$0.5</td>
+                <td>$0.57</td>
+                <td>35%</td>
+                <td>$0.92</td>
+                <td>Oui</td>
+                <td>$0.95</td>
+              </tr>
 
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-           </tbody>
-          </table>
+             </tbody>
+            </table>
 
         </div> <!--End .table-div -->
 
