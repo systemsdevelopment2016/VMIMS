@@ -1,4 +1,4 @@
-$(document).ready(function(e) {
+$(document).ready(function() {
 
 	$('[data-toggle="popover"]').popover();
 	
@@ -23,10 +23,11 @@ $(document).ready(function(e) {
 		}
 	});	
 
+	
+
 });
 
 function isChildOfActionmenu(target) {
 	return ( target.hasClass("glyphicon-plus-sign") || target.hasClass("glyphicon-pencil") || target.hasClass("glyphicon-trash") ||
 		 target.hasClass("glyphicon-pushpin") || target.hasClass("glyphicon-floppy-disk") || target.hasClass("glyphicon-print") );
 }
-

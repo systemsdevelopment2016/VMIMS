@@ -24,8 +24,8 @@
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <form class="col-xs-10" action="searchResult.php" method="post">
-              <input class="form-control" id="search" type="text" name="itemphp" placeholder="Rechercher...">
+            <form class="col-xs-10" action="search.php" method="post">
+                <input class="form-control" id="search" type="text" name="item" placeholder="Rechercher...">
             </form>
           </div>
           
@@ -64,7 +64,7 @@
           <li><a href="report.php"><span class="glyphicon"></span>Rapport</a>
         </ul>
         
-        <div class="sidebar-img"><a href="../index.html"><img src="../img/amicale-stinson-logo.png" height="100"></a></div>
+        <div class="sidebar-img"><a href="../index.php"><img src="../img/amicale-stinson-logo.png" height="100"></a></div>
       </div>
 
       <div class="container content"> 

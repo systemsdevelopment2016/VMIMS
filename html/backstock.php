@@ -12,8 +12,9 @@
     <title>Réserve | Amicale Stinson</title>
     
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui.theme.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
-
 
   </head>
   <body>
@@ -25,8 +26,8 @@
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <form class="col-xs-10" action="searchResult.php" method="post">
-              <input class="form-control" id="search" type="text" name="itemphp" placeholder="Rechercher...">
+            <form class="col-xs-10" action="search.php" method="post">
+                <input class="form-control" id="search" type="text" name="item" placeholder="Rechercher...">
             </form>
           </div>
           
@@ -65,7 +66,7 @@
           <li><a href="report.php"><span class="glyphicon"></span>Rapport</a>
         </ul>
         
-        <div class="sidebar-img"><a href="../index.html"><img src="../img/amicale-stinson-logo.png" height="100"></a></div>
+        <div class="sidebar-img"><a href="../index.php"><img src="../img/amicale-stinson-logo.png" height="100"></a></div>
       </div>
 
       <div class="container content"> 
@@ -82,6 +83,53 @@
           <span class="glyphicon glyphicon-print"> Imprimer</span>
         </div>
 
+         <!-- THIS FORM HAS TO BE HIDDEN AT FIRST -->
+        <div class="form-container" style="display:none;">
+          <div class="form-inline" role="form"  id="formid">
+            <input type="hidden" name="addToDB" value="login" />
+            <div class="form-group col-md-3">
+              <label for="pname">Product Name:</label>
+              <input type="text" class="form-control" id="pname" name="pname" placeholder="Enter product">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="category">Product Category:</label>
+              <input type="text" class="form-control" id="category" name="category" placeholder="Enter category">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="quantity">Product Quantity:</label>
+              <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="exp">Expiry Date:</label>
+              <input type="text" class="form-control" id="exp" name="exp" placeholder="Enter date">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="rname">Retailer Name:</label>
+              <input type="text" class="form-control" id="rname" name="rname" placeholder="Enter retailer">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="raddress">Retailer Address:</label>
+              <input type="text" class="form-control" id="raddress" name="raddress" placeholder="Enter address">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="bprice">Buying Price:</label>
+              <input type="text" class="form-control" id="bprice" name="bprice" placeholder="Enter buy price">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="sprice">Selling Price:</label>
+              <input type="text" class="form-control" id="sprice" name="sprice" placeholder="Enter sell price">
+            </div>
+            <div class="form-group">
+              <label for="comment">Comment:</label>
+              <textarea class="form-control" rows="1" id="comment" name="comment" placeholder="Enter comments or notes"></textarea>
+            </div>
+            <br/>
+            <input type="submit" id="submit" class="btn btn-default" name="submit" text="submit"/>
+          </div>
+          <div id="response"></div>
+        </div> 
+        <!-- END OF THE FORM -->
+
         <div class="table-div">
           <table class="table table-responsive table-bordered table-hover">
             <thead>
@@ -95,53 +143,31 @@
             </thead>
 
            <tbody>
-            <tr>
-              <td>Oreo Cookies</td>
-              <td>Cookies/Pastry</td>
-              <td>15</td>
-              <td>15.09.17</td>
-              <td>$4.99</td>
-            </tr>
+           <?php
 
-            <tr>
-              <td>Smarties</td>
-              <td>Sweets</td>
-              <td>10</td>
-              <td>15.09.17</td>
-              <td>$3.99</td>
-            </tr>
+              $db = new PDO("sqlite:../db/amicale.sqlite");
+              
+              $sql = "select sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
+                from Locations , Products sec, ProductRetailerLocations th, ProductRetailers fo
+                where Locations.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID and Locations.L_Name like 
+                '%backstock%'";
+                  $result = $db->query($sql);
+          
+              if(is_array($result) || is_object($result))
+              {
+                  foreach($result as $row)
+                      {
+                        echo "<tr>";
+                        echo "<td>".$row[P_Name]."</td>";
+                        echo "<td>".$row[P_Category]."</td>";
+                        echo "<td>".$row[PRL_Quantity]."</td>";
+                        echo "<td>".$row[PRL_ExpiryDate]."</td>";
+                        echo "<td>".$row[PR_BuyPrice]."</td>";
+                        echo "</tr>";
+                      }
+              }
 
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
-
-            <tr>
-              <td>Milk</td>
-              <td>Diary products</td>
-              <td>5</td>
-              <td>15.09.17</td>
-              <td>$2.99</td>
-            </tr>
+            ?>
            </tbody>
           </table>
 
@@ -152,6 +178,7 @@
     </div> <!--End of .container-fluid-->     
 
     <script src="../js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/base.js"></script>
     <script src="../js/table.js"></script>

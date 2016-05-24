@@ -22,14 +22,14 @@ body {position:relative; }
 .sidebar-ul ul {list-style-type:none;}
 .sidebar-ul ul li {font-size:0.75em;}
 .sidebar-ul ul li a {color: #000;}
-.sidebar .sidebar-img {position: relative; margin-top: 65%; margin-left: 10%;}
+.sidebar .sidebar-img {position: absolute; bottom: 20px; left: 20px;}
 .sidebar .sidebar-img img {height: 150px;}
 
 .content {width:80%; float:right; padding-top:50px; padding-left: 30px; padding-right: 30px; background:#FFF; color:#00AEEF;}
 .content .page-header {padding-bottom: 0px; margin-bottom: 15px;}
 .content .page-header h1 { margin-bottom: 5px; }
 
-.action-menu {display: table; margin: 0 auto;}
+.action-menu {display: table; margin: 0 auto; cursor: pointer;}
 .action-menu span { padding: 10px 10px; padding-bottom: 15px;font-size:1.5em; color:#000;}
 .action-menu span p {display: inline; padding-left: 5px;}
 .action-menu .glyphicon {border-radius: 5px;}
@@ -43,17 +43,22 @@ body {position:relative; }
 .table-top {  position: fixed; z-index: 9999; background-color: #FFF; width: 77%}
 .table-top td:hover {background: rgba(0,174,239,0.5); color: #FFF;}
 
+/* table | add */
+.form-container { width: 95%; margin-right: auto; margin-left:auto; margin-top: 20px; border: 1px solid rgba(128,128,128,0.3); padding-top: 10px;}
+.form-inline .form-group { max-width: 345px; padding: 10px; padding-bottom: 0px; padding-top: 0px; margin-bottom: 10px;}
+.form-inline .form-group input {float: right;}
+.form-inline .form-group:last-of-type { display: inline;}
+.form-inline .form-group:last-of-type label {margin-right: 30px;}
+.form-inline .form-group #comment { width: 70%; }
+.form-inline button[type*=submit] { width: 10%; display: table; margin: 10px auto; }
+
 #ReportSales, #ReportWastage{
 	margin-top: 30px;
-}
-
-#ReportSales{
-	margin-bottom: 50px;
 }
 
 /*****FOR THE PRINT VERSION*****/
 @media print{   
     .sidebar,.navbar, .action-menu{ display:none; }
-    .container{ margin-right:10%; margin-top: -5%; width: 90%}
+    .container{ margin-right:10%; margin-top: -5%; }
     .page-header h1{ font-size: 20px; margin-left:5%; }
 }

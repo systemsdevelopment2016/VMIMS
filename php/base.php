@@ -2,53 +2,55 @@
 
 
 
-function create_tables() {
-	try
-	{
+if (isset($_POST['addData'])) {
+    //create_tables(); // creates tables in DB
+    addToDB(); // inserts content to DB
+}
+
+
+function addToDB() {
+	try {
+
+		$db = new PDO("sqlite:C:/xampp/htdocs/db/amicale.sqlite");
 		// open DB connection
-		$db = new PDO("sqlite:db/amicale.sqlite");
-
-		// create Products table
-		$db->exec("CREATE TABLE IF NOT EXISTS Products (P_ID INT(5) PRIMARY KEY, P_Name VARCHAR(20), P_Category VARCHAR(20));");
-
-		// create Retailers table
-		$db->exec("CREATE TABLE IF NOT EXISTS Retailers (R_ID INT(5) PRIMARY KEY, R_Name VARCHAR(20), R_Address VARCHAR(20));");
-
-		// create ProductRetailers table
-		$db->exec("CREATE TABLE IF NOT EXISTS ProductRetailers (P_ID INT(5), R_ID INT(5), PR_BuyPrice DOUBLE(7,2), PRIMARY KEY (P_ID, R_ID), FOREIGN KEY(P_ID) REFERENCES Products(P_ID), FOREIGN KEY(R_ID) REFERENCES Retailers(R_ID));");
-
-		// create Locations table
-		$db->exec("CREATE TABLE IF NOT EXISTS Locations (L_ID INT(3) PRIMARY KEY, L_Name VARCHAR(20));");
-
-		// create ProductRetailerLocations table
-		$db->exec("CREATE TABLE IF NOT EXISTS ProductRetailerLocations (PRL_ID INT(7) PRIMARY KEY, P_ID INT(5), R_ID INT(5), L_ID INT(3), PRL_Quantity INT(5), PRL_ExpiryDate DATE, PRL_Comment VARCHAR(50), FOREIGN KEY(P_ID) REFERENCES Products(P_ID), FOREIGN KEY(R_ID) REFERENCES Retailers(R_ID), FOREIGN KEY(L_ID) REFERENCES Locations(L_ID));");
-
-		// create Wastes table
-		$db->exec("CREATE TABLE IF NOT EXISTS Wastes (W_ID INT(5) PRIMARY KEY, PRL_ID INT(7), W_Quantity INT(5), W_Date DATE, W_Reason VARCHAR(50), W_Supervisor VARCHAR(10), FOREIGN KEY(PRL_ID) REFERENCES ProductRetailerLocations(PRL_ID));");
 		
-		// create Sales table
-		$db->exec("CREATE TABLE IF NOT EXISTS Sales (S_ID INT(5) PRIMARY KEY, PRL_ID INT(7), S_Quantity INT(5), S_ProfitMargin DOUBLE(5,2), FOREIGN KEY(PRL_ID) REFERENCES ProductRetailerLocations(PRL_ID));");
+		$pname = $_POST['pname'];
+		$category = $_POST['category'];
+		$rname = $_POST['rname'];
+		$raddress = $_POST['raddress'];
+		$bprice = $_POST['bprice'];
 
-		// close DB connection
+		$quantity = $_POST['quantity'];
+		$exp = $_POST['exp'];
+		$sprice = $_POST['sprice'];
+		$comment = $_POST['comment'];
+		$l_name = $_POST['l_name']; // LocationName
+
+		// (1) INSERT data into the DB
+		$db->exec("INSERT INTO Products (P_Name, P_Category) VALUES ( '$pname' , '$category' )");
+		$db->exec("INSERT INTO Retailers (R_Name, R_Address) VALUES ('$rname', '$raddress')");
+
+		//product ID
+		$p_id = $db->exec("SELECT P_ID FROM Products WHERE P_Name = '" . $pname . "';");
+
+		//retailer ID
+		$r_id = $db->exec("SELECT R_ID FROM Retailers WHERE R_Name = '" . $rname . "';");
+
+		$db->exec("INSERT INTO ProductRetailers VALUES ('$p_id', '$r_id', '$bprice');");
+		
+		//location ID
+		$l_id = $db->exec("SELECT L_ID FROM Locations WHERE L_Name = '" . $l_name . "';");
+		
+		$db->exec("INSERT INTO ProductRetailerLocations (P_ID, R_ID, L_ID, PRL_Quantity, PRL_SellPrice, PRL_ExpiryDate, PRL_Comment) VALUES ('$p_id', '$r_id', '$l_id', '$quantity', '$sprice', '$exp', '$comment');");
+
+	    // close DB connection
 		$db = NULL;
-	}
-	catch(PDOException $e)
+
+	}catch(PDOException $e)
 	{
 		echo $e->getMessage();
 	}
 }
 
-
-function connect()
-{
-	try
-	{
-		return $db = new PDO("sqlite:/db/amicale.sqlite");
-	}
-	catch(PDOException $e)
-	{
-		echo $e->getMessage();
-	}
-}
 
 ?>

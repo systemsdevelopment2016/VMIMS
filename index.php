@@ -1,7 +1,50 @@
 <?php
-include "/php/base.php";
-create_tables();
+  try
+  {
 
+    // open DB connection
+    $db = new PDO("sqlite:C:/xampp/htdocs/db/amicale.sqlite");
+
+      // create Products table
+        $db->exec("CREATE TABLE IF NOT EXISTS Products (P_ID INTEGER PRIMARY KEY, P_Name TEXT, P_Category TEXT);");
+
+        // create Retailers table
+        $db->exec("CREATE TABLE IF NOT EXISTS Retailers (R_ID INTEGER PRIMARY KEY, R_Name TEXT, R_Address TEXT);");
+
+        // create ProductRetailers table
+        $db->exec("CREATE TABLE IF NOT EXISTS ProductRetailers (P_ID INTEGER, R_ID INTEGER, PR_BuyPrice REAL, PRIMARY KEY (P_ID, R_ID), FOREIGN KEY(P_ID) REFERENCES Products(P_ID), FOREIGN KEY(R_ID) REFERENCES Retailers(R_ID));");
+
+        // create Locations table
+        $db->exec("CREATE TABLE IF NOT EXISTS Locations (L_ID INTEGER PRIMARY KEY, L_Name TEXT);");
+
+        // create ProductRetailerLocations table
+        $db->exec("CREATE TABLE IF NOT EXISTS ProductRetailerLocations (PRL_ID INTEGER PRIMARY KEY, P_ID INTEGER, R_ID INTEGER, L_ID INTEGER, PRL_Quantity INTEGER, PRL_SellPrice REAL, PRL_ExpiryDate TEXT, PRL_Comment TEXT, FOREIGN KEY(P_ID) REFERENCES Products(P_ID), FOREIGN KEY(R_ID) REFERENCES Retailers(R_ID), FOREIGN KEY(L_ID) REFERENCES Locations(L_ID));");
+
+        // create Wastes table
+        $db->exec("CREATE TABLE IF NOT EXISTS Wastes (W_ID INTEGER PRIMARY KEY, PRL_ID INTEGER, W_Quantity INTEGER, W_Date TEXT, W_Reason TEXT, W_Supervisor TEXT, FOREIGN KEY(PRL_ID) REFERENCES ProductRetailerLocations(PRL_ID));");
+        
+        // create Sales table
+        $db->exec("CREATE TABLE IF NOT EXISTS Sales (S_ID INTEGER PRIMARY KEY, PRL_ID INTEGER, S_Quantity INTEGER, S_ProfitMargin REAL, FOREIGN KEY(PRL_ID) REFERENCES ProductRetailerLocations(PRL_ID));");
+
+
+        /*THIS CODE CAN BE MODIFIED*/
+        //$result = $db->query("SELECT COUNT(*) as total FROM Locations"); 
+        /*$db->exec("INSERT INTO Locations (L_Name) VALUES ('fridge1');");
+        $db->exec("INSERT INTO Locations (L_Name) VALUES ('fridge2');");
+        $db->exec("INSERT INTO Locations (L_Name) VALUES ('backstock');");
+        $db->exec("INSERT INTO Locations (L_Name) VALUES ('beverages1');");
+        $db->exec("INSERT INTO Locations (L_Name) VALUES ('beverages2');");
+        $db->exec("INSERT INTO Locations (L_Name) VALUES ('snacks');");
+        $db->exec("INSERT INTO Locations (L_Name) VALUES ('meals');");*/
+      
+
+    // close DB connection
+    $db = NULL;
+  }
+  catch(PDOException $e)
+  {
+    echo $e->getMessage();
+  }
 ?>
 
 <!DOCTYPE html>
@@ -31,9 +74,9 @@ create_tables();
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <form class="col-xs-10" action="html/searchResult.php" method="post">
-              <input class="form-control" id="search" type="text" name="item" placeholder="Rechercher...">
-            </form>
+            <div class="col-xs-10">
+              <input class="form-control" id="search" type="text" placeholder="Rechercher...">
+            </div>
           </div>
           
           <div class="cols-xs-3 settings">
@@ -88,9 +131,9 @@ create_tables();
               </div>
               <div class="panel-body">
                 <ul class="list-group">
-                  <a href="html/fridge1.html"><li class="list-group-item">Réfrigérateur 1</li></a>
-                  <a href="html/fridge2.html"><li class="list-group-item">Réfrigérateur 2</li></a>
-                  <a href="html/backstock.html"><li class="list-group-item">Réserve</li></a>
+                  <a href="html/fridge1.php"><li class="list-group-item">Réfrigérateur 1</li></a>
+                  <a href="html/fridge2.php"><li class="list-group-item">Réfrigérateur 2</li></a>
+                  <a href="html/backstock.php"><li class="list-group-item">Réserve</li></a>
                 </ul>
               </div>
               <div class="panel-footer"><p>Inventaire</p></div>
@@ -104,10 +147,10 @@ create_tables();
               </div>
               <div class="panel-body four-list-group-items">
                 <ul class="list-group">
-                  <a href="html/beverages1.html"><li class="list-group-item">Breuvages 1</li></a>
-                  <a href="html/beverages2.html"><li class="list-group-item">Breuvages 2</li></a>
-                  <a href="html/snacks.html"><li class="list-group-item">Collations</li></a>
-                  <a href="html/meals.html"><li class="list-group-item">Repas</li></a>
+                  <a href="html/beverages1.php"><li class="list-group-item">Breuvages 1</li></a>
+                  <a href="html/beverages2.php"><li class="list-group-item">Breuvages 2</li></a>
+                  <a href="html/snacks.php"><li class="list-group-item">Collations</li></a>
+                  <a href="html/meals.php"><li class="list-group-item">Repas</li></a>
                 </ul>
               </div>
               <div class="panel-footer"><p>Machines Distributrices</p></div>
@@ -121,29 +164,16 @@ create_tables();
               </div>
               <div class="panel-body">
                 <ul class="list-group">
-                  <a href="html/shopping.html"><li class="list-group-item">Liste d'Achats</li></a>
-                  <a href="html/wastage.html"><li class="list-group-item">Liste de Pertes</li></a>
-                  <a href="html/sales.html"><li class="list-group-item">Liste de Ventes</li></a>
+                  <a href="html/shopping.php"><li class="list-group-item">Liste d'Achats</li></a>
+                  <a href="html/wastage.php"><li class="list-group-item">Liste de Pertes</li></a>
+                  <a href="html/sales.php"><li class="list-group-item">Liste de Ventes</li></a>
                 </ul>
               </div>
               <div class="panel-footer"><p>Listes</p></div>
             </div>
           </div>
 
-          <!--<div class="col-sm-4 page-menu-section">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <span class="glyphicon glyphicon-eye-open"> Voir</span>
-                  <span class="glyphicon glyphicon-search"> Rechercher</span>
-                  <span class="glyphicon glyphicon-plus-sign"> Ajouter</span>
-                  <span class="glyphicon glyphicon-pencil"> Modifier</span>
-                  <span class="glyphicon glyphicon-trash"> Supprimer</span>
-                </div>
-                <div class="panel-footer">
-                  <p>Réfrigérateur 2</p>
-                </div>
-              </div>
-            </div>-->
+            
 
         </div> <!--End of .page-menu-->
       </div> <!--End of .container .content-->

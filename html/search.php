@@ -1,8 +1,3 @@
-<?php
-      $dsn = 'sqlite:/xampp/htdocs/db/amicale.sqlite';
-      $db = new PDO($dsn);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,26 +7,25 @@
 
     <meta name="description" content="">
     <meta name="author" content="">
+    
     <link rel="icon" href="../img/stm-icon.ico">
 
-    <title>Réserve | Amicale Stinson</title>
+    <title>Search</title>
     
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/base.css">
-    <script src="../js/jquery-1.12.3.min.js"></script>
 
   </head>
   <body>
     <div class="">
-    
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <div class="col-xs-2"><a href="../index.html"><img src="../img/stm-logo.png"></a></div>
 
           <div class="col-xs-7 search-bar">
             <label class="col-xs-2 control-label" for="search"><span class="glyphicon glyphicon-search"></span></label>
-            <form class="col-xs-10" action="searchResult.php" method="post">
-              <input class="form-control" id="search" type="text" name="itemphp" placeholder="Rechercher...">
+            <form class="col-xs-10" action="search.php" method="post">
+                <input class="form-control" id="search" type="text" name="item" placeholder="Rechercher...">
             </form>
           </div>
           
@@ -70,10 +64,10 @@
           <li><a href="report.php"><span class="glyphicon"></span>Rapport</a>
         </ul>
         
-        <div class="sidebar-img"><a href="../index.html"><img src="../img/amicale-stinson-logo.png" height="100"></a></div>
+        <div class="sidebar-img"><a href="../index.php"><img src="../img/amicale-stinson-logo.png" height="100"></a></div>
       </div>
 
-      <div class="container content"> 
+      <div class="container content">
         <div class="page-header">
           <h1>Recherche</h1>
         </div>
@@ -92,14 +86,16 @@
             </thead>
 
            <tbody>
-
-           <?php
+            <?php
+              $dsn = 'sqlite:/xampp/htdocs/db/amicale.sqlite';
+              $db = new PDO($dsn);
 
                     $retrieveValue = $_POST['item'];
 
-                    $sql = "select one.L_Name, sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
-                            from Locations one, Products sec, ProductRetailerLocations th, ProductRetailers fo
-                            where sec.P_Name LIKE '%{$retrieveValue}%' and one.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID";
+                    $sql = "select one.L_Name, sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,
+                    fo.PR_BuyPrice from Locations one, Products sec, ProductRetailerLocations th, ProductRetailers fo
+                      where sec.P_Name LIKE '%{$retrieveValue}%' and one.L_ID = th.L_ID and sec.P_ID = th.P_ID and 
+                      fo.P_ID = th.P_ID";
                     $queryResult = $db->query($sql);
 
                     if(is_array($queryResult) || is_object($queryResult))
@@ -117,7 +113,7 @@
                           echo "</tr>";
                       }
 
-                      $_POST = array();
+                      //$_POST = array();
                    }
                    else{
                     echo "Aucun résultat pour cette recherche";
@@ -133,15 +129,8 @@
 
     </div> <!--End of .container-fluid-->     
 
-    <script type="text/javascript">
-      window.onbeforeunload = function(){
-          $('.toDelete').remove();
-      }
-    </script>
-
-
+    <script src="../js/jquery-1.12.3.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/base.js"></script>
-    <script src="../js/table.js"></script>
   </body>
 </html>

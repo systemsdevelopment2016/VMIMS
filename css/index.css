@@ -4,8 +4,8 @@
 .page-menu .page-menu-section {height: 500px;}
 
 .page-menu .panel .panel-heading {height: 200px; text-align: center;}
-.page-menu .panel .panel-heading img { width: 80%; display: inline-block; position: relative; top: 50%; transform: translateY(-50%); }
-.page-menu .panel .panel-heading #list-img { height: 100%; width: 50%;}
+.page-menu .panel .panel-heading img { width: 80%; max-width: 300px; display: inline-block; position: relative; top: 50%; transform: translateY(-50%); }
+.page-menu .panel .panel-heading #list-img { height: 100%; width: 50%; max-height: 180px; }
 
 .page-menu .panel .panel-body {padding: 0px; font-size: 1.3em; text-align: center; height: 139px;}
 .page-menu .panel .four-list-group-items { height: 185px; }
