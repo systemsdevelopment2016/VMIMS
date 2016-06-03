@@ -109,7 +109,7 @@
                           echo "<td>".$row[P_Category]."</td>";
                           echo "<td>".$row[PRL_Quantity]."</td>";
                           echo "<td>".$row[PRL_ExpiryDate]."</td>";
-                          echo "<td>".$row[PR_BuyPrice]."</td>";
+                          echo "<td>".number_format($row[PR_BuyPrice],2)."</td>";
                           echo "</tr>";
                       }
 

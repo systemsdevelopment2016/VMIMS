@@ -3,16 +3,29 @@ $(document).ready(function() {
 	$(".action-menu .glyphicon-plus-sign").on('click', add);
 	$(".action-menu .glyphicon-pencil").on('click', modify);
 	$(".action-menu .glyphicon-print").on('click', printTable);
-  $(".action-menu .glyphicon-trash").on('click',deleteRow);
-
-        $("#exp").datepicker(); 
+    $(".action-menu .glyphicon-trash").on('click',deleteRow);
+    $("#exp").datepicker(); 
 
 });
 
 
+/***DEFAULT VARIABLES FOR LOCATION**/
+var qty = "quantity";
+var pName = "pname";
+var cat = "category";
+var expD = "exp";
+var retName = "rname";
+var retAdrs = "raddress";
+var b_price = "bprice";
+var s_price = "sprice";
+/****END*****/
+
+var tempErrors = new Array();
+
 /******************************************** ADD ************************************************/
 function add() {
 
+    var freeToGo = false;
 
     if ( $(".form-container").is(':visible') ) {
         $(".form-container").hide(150, function(){ $(".form-container") });
@@ -20,37 +33,85 @@ function add() {
     }
 
     var filename = location.href.match(/([^\/]*?)$/)[1]; // filename of the HTML webpage
+
     var l_name = filename.slice(0, -4); // (!) NOTE: 4 indices for 'html' and 1 index for '.' (period); IMPLIES that the filename is of type HTML
 
-    // NOTE: filename will allow us to infer l_id so that we can query the tables WHERE L_ID = $l_id
 
+    // NOTE: filename will allow us to infer l_id so that we can query the tables WHERE L_ID = $l_id
+    
     $(".form-container").show(150);
 
     $("#submit").click(function(){
 
-       $.post(
-         "../php/base.php",
-          {
-            addData:"addData",
-            pname:$("#pname").val(),
-            category:$("#category").val(),
-            quantity:$("#quantity").val(),
-            exp:$("#exp").val(),
-            rname:$("#rname").val(),
-            raddress:$("#raddress").val(),
-            bprice:$("#bprice").val(),
-            sprice:$("#sprice").val(),
-            comment:$("#comment").val(),
-            l_name:l_name
-          },
-          function(data){location.reload();}
-        );
+        var tempQuantity = $("#quantity").val();
+        var name = $("#pname").val();
+        var category = $("#category").val();
+        var expiryDate = $("#exp").val();
+        var retailerName = $("#rname").val();
+        var retailerAddress = $("#raddress").val();
+        var tempBuyPrice = $("#bprice").val();
+        var tempSellPrice = $("#sprice").val();
+
+        var freeToGo = checkFields(name,category,tempQuantity,expiryDate,retailerName,retailerAddress,tempBuyPrice,tempSellPrice);
+
+        if(freeToGo == true){
+
+                var quantity = parseInt(tempQuantity);
+                var buyPrice = parseFloat( Math.round(tempBuyPrice * 100) / 100).toFixed(2);
+                var sellPrice = parseFloat( Math.round(tempSellPrice * 100) / 100).toFixed(2);
+
+               $.post(
+                 "../php/base.php",
+                  {
+                    addData:"addData",
+                    pname: name.toString(),
+                    category: category.toString(),
+                    quantity: quantity.toString(),
+                    exp: expiryDate.toString(),
+                    rname: retailerName.toString(),
+                    raddress: retailerAddress.toString(),
+                    bprice: buyPrice,
+                    sprice: sellPrice,
+                    comment:$("#comment").val(),
+                    l_name:l_name
+                  },
+                  function(data){location.reload();}
+                );
+        }
+        else{
+
+            for(var a=0; a < tempErrors.length-1; a++){
+                if( $("#"+tempErrors[a]).val() != "" ){
+
+                    $("#"+tempErrors[a]).css("background-color","white");
+                }
+            }
+
+            tempErrors = freeToGo;
+
+            if(freeToGo[freeToGo.length-1] === "empty"){
+
+                for(var i=0; i<=freeToGo.length-1; i++){
+
+                    $("#"+freeToGo[i]).css("background-color","#cc0000");
+                }
+            }
+            else{
+
+                for(var i=0; i<=freeToGo.length; i++){
+
+                    $("#"+freeToGo[i]).css("background-color","#cc0000");
+                }
+
+            }
+
+
+        }
 
      });
-
 }
 
-/* ADD legacy code */
+/* ADD legacy code 
 function add_old() {
 
     var generatedID = Math.floor(1000 + Math.random() * 9000);
@@ -107,9 +168,9 @@ function add_old() {
 	});
 
 	$(".table tr:last").removeClass("empty");
-}
+}*/
 
-/* MODIFY */
+/****************************** MODIFY **********************************/
 function modify() {
 	$("body").append('<div class="overlay"></div>');
 	$(".overlay").css("display", "block");
@@ -133,6 +194,8 @@ function modify() {
 	$(".table-top td").click(function() {
 
 		var oldContent = $(this).text();
+        var codeParent = "";
+        var codeIndex = "";
 
 		var fieldWidth = $(this).width();
 		var fieldPadding = $(".table > thead").find("> tr:first > th:first").css("padding");
@@ -144,7 +207,13 @@ function modify() {
 		$(this).css({"padding" : parseInt(fieldPadding)/4+"px"});
 		$(this).children(0).focus();
 
-		$(this).children(0).blur(function() {
+         var parentTag = $(this).parent();
+         var parentID = parentTag.attr('id');
+         codeParent = parentID;
+         var columnIndex = $(this).parent().children().index($(this));
+         codeIndex = columnIndex;
+
+		$(this).children(0).blur(function(){
 			var parent = $(this).parent();
 			var input = $(this).val();
 
@@ -160,6 +229,16 @@ function modify() {
 				$(".table-top td").off("click");
 				$(".table").removeClass("table-top");
 				$(document).off("mouseup");
+
+                $.post(
+                 "../php/base.php",
+                  {
+                    UrowID: codeParent,
+                    columnNmb: codeIndex,
+                    newValue: input
+                  },
+                  function(data){}
+                );
 			}
 		});
 
@@ -175,8 +254,14 @@ function printTable(){
 /*DELETE ROW*/
 function deleteRow(event){
     
+    var row_id = "";
+
     //doesn't allow the event to be executed more than once
-    $(this).off(event);
+    if($("#deleteFeatures").is(":visible"))
+    {
+        $("#deleteFeatures").hide(150, function(){ $("#deleteFeatures") });
+        return;
+    }
     
     //create a div element as container for the text instruction and button
     var divTag =  document.createElement("div");
@@ -219,19 +304,29 @@ function deleteRow(event){
            $('tr.selected').removeClass("selected");
            $(this).addClass("selected");
            $(this).css("background","#acbad5");
+           row_id = $(this).attr('id');
        }
     });
     
     //function when clicking the delete button
     $("#delete").click(function(){
-        
+                
     //add a transparent black overlay
     $("body").append('<div class="overlay"></div>');
 	   $(".overlay").css("display", "block");
         
-
         var decision  = window.confirm("La suppresion de cette rangée de donnée sera irréversible! \nÊtes-vous sûr de vouloir supprimer cette rangée?");
         if(decision){
+
+            $.post(
+                 "../php/base.php",
+                  {
+                    deleteRow:"deleteRow",
+                    rowDBID:row_id
+                  },
+                  function(data){location.reload();}
+            );
+            
             var row = $("tr.selected").closest('tr');
             row.remove();
             $(".overlay").remove();
@@ -245,17 +340,80 @@ function deleteRow(event){
         // if there is no more data, then it displays a message
         //by displaying a new paragraph
         if(rowCount === 1){
-			     para.innerHTML = "Aucune donnée à montrer";
+			para.innerHTML = "Aucune donnée à montrer";
             para.style.fontSize = "20px";
             var tableWidth = $(".table").width() / $(".table").parent().width()*100;
             console.log(tableWidth);
             para.style.marginLeft = ((tableWidth/2))/1.5 + "%";
             $(button).remove();
-            $(this).on(event);
         }
     });
       
+}
 
+function checkFields(pName, pCategory, pQuantity,date,rName,rAddress,bPrice,sPrice){
+
+    var args = [].slice.call(arguments);
+    var arrayReturn = new Array();
+    var i=0;
+
+    while( i < args.length) {
+
+        if(args[i] == ""){
+            var loc = locationForm(i);
+            arrayReturn.push(loc);
+             
+        }
+        i++;
+    }
+
+    if(i > args.length-1 && arrayReturn.length != 0){
+        arrayReturn.push("empty");
+        return arrayReturn;
+    }
+
+    var nmbLocation;
+    if(isNaN(args[2]) )
+    {
+        nmbLocation = locationForm(2);
+        return arrayReturn = [args[2],nmbLocation];
+    }
+    if( isNaN(args[6]) )
+    {
+        nmbLocation = locationForm(6);
+        return arrayReturn = [args[6],nmbLocation];;
+
+    }
+    if (isNaN(args[7]) )
+    {
+        nmbLocation = locationForm(7);
+        return arrayReturn = [args[7],nmbLocation];
+    }
+
+    return true;
+}
+
+function locationForm(index){
+
+    switch(index)
+    {
+        case 0: 
+            return pName;
+        case 1:
+            return cat;
+        case 2:
+            return qty;
+        case 3: 
+            return expD;
+        case 4:
+            return retName;
+        case 5:
+            return retAdrs;
+        case 6:
+            return b_price;
+        case 7:
+            return s_price;
+    } 
 }
 
 /*function addNote(event){

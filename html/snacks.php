@@ -130,6 +130,13 @@
         </div> 
         <!-- END OF THE FORM -->
 
+        <!--DIALOG BOX HERE-->
+        <div id="dialog" title="Basic dialog" style="display:none;">
+        <p id="errorText"></p>
+        </div>
+        <!--END OF DIALOG BOX-->
+
+
         <div class="table-div">
           <table class="table table-responsive table-bordered table-hover">
             <thead>
@@ -145,25 +152,25 @@
            <tbody>
             <?php
 
-              $db = new PDO("sqlite:../db/amicale.sqlite");
+                $db = new PDO("sqlite:C:/xampp/htdocs/db/amicale.sqlite");
               
-              $sql = "select sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
+              $sql = "select th.PRL_ID, sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
                 from Locations , Products sec, ProductRetailerLocations th, ProductRetailers fo
                 where Locations.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID and Locations.L_Name like 
                 '%snacks%'";
                   $result = $db->query($sql);
           
-              if(is_array($returnedValue) || is_object($returnedValue))
+              if(is_array($result) || is_object($result))
               {
-                  foreach($returnedValue as $row)
+                  foreach($result as $row)
                       {
-                        echo "<tr>";
+                        echo "<tr id='".$row[PRL_ID]."'>";
                         echo "<td>".$row[L_Name]."</td>";
                         echo "<td>".$row[P_Name]."</td>";
                         echo "<td>".$row[P_Category]."</td>";
                         echo "<td>".$row[PRL_Quantity]."</td>";
                         echo "<td>".$row[PRL_ExpiryDate]."</td>";
-                        echo "<td>".$row[PR_BuyPrice]."</td>";
+                        echo "<td>".number_format($row[PR_BuyPrice],2)."</td>";
                         echo "</tr>";
                       }
               }

@@ -148,7 +148,7 @@
 
               $db = new PDO("sqlite:C:/xampp/htdocs/db/amicale.sqlite");
               
-              $sql = "select sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
+              $sql = "select th.PRL_ID,sec.P_Name, sec.P_Category,th.PRL_Quantity,th.PRL_ExpiryDate,fo.PR_BuyPrice 
                 from Locations , Products sec, ProductRetailerLocations th, ProductRetailers fo
                 where Locations.L_ID = th.L_ID and sec.P_ID = th.P_ID and fo.P_ID = th.P_ID and Locations.L_Name like 
                 '%beverages1%'";
@@ -158,12 +158,12 @@
               {
                   foreach($result as $row)
                       {
-                        echo "<tr>";
+                        echo "<tr id='".$row[PRL_ID]."'>";
                         echo "<td>".$row[P_Name]."</td>";
                         echo "<td>".$row[P_Category]."</td>";
                         echo "<td>".$row[PRL_Quantity]."</td>";
                         echo "<td>".$row[PRL_ExpiryDate]."</td>";
-                        echo "<td>".$row[PR_BuyPrice]."</td>";
+                        echo "<td>".number_format($row[PR_BuyPrice],2)."</td>";
                         echo "</tr>";
                       }
               }

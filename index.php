@@ -28,14 +28,17 @@
 
 
         /*THIS CODE CAN BE MODIFIED*/
-        //$result = $db->query("SELECT COUNT(*) as total FROM Locations"); 
-        /*$db->exec("INSERT INTO Locations (L_Name) VALUES ('fridge1');");
-        $db->exec("INSERT INTO Locations (L_Name) VALUES ('fridge2');");
-        $db->exec("INSERT INTO Locations (L_Name) VALUES ('backstock');");
-        $db->exec("INSERT INTO Locations (L_Name) VALUES ('beverages1');");
-        $db->exec("INSERT INTO Locations (L_Name) VALUES ('beverages2');");
-        $db->exec("INSERT INTO Locations (L_Name) VALUES ('snacks');");
-        $db->exec("INSERT INTO Locations (L_Name) VALUES ('meals');");*/
+        $result = $db->query("SELECT L_ID FROM Locations"); 
+
+        if($result->fetchColumn() == false){
+            $db->exec("INSERT INTO Locations (L_Name) VALUES ('fridge1');");
+            $db->exec("INSERT INTO Locations (L_Name) VALUES ('fridge2');");
+            $db->exec("INSERT INTO Locations (L_Name) VALUES ('backstock');");
+            $db->exec("INSERT INTO Locations (L_Name) VALUES ('beverages1');");
+            $db->exec("INSERT INTO Locations (L_Name) VALUES ('beverages2');");
+            $db->exec("INSERT INTO Locations (L_Name) VALUES ('snacks');");
+            $db->exec("INSERT INTO Locations (L_Name) VALUES ('meals');");
+      }
       
 
     // close DB connection
